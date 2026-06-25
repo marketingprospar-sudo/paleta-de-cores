@@ -14,7 +14,6 @@
       --brown : #200e03;
       --olive : #1d321c;
       --beige : #c3b09e;
-      --white : #ffffff;
     }
 
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -91,7 +90,7 @@
     .hero-title {
       font-family:'Cormorant Garamond',serif; font-weight:300;
       font-size:clamp(3rem,9vw,6.2rem); letter-spacing:.18em;
-      text-transform:uppercase; color:var(--white); line-height:.95;
+      text-transform:uppercase; color:var(--beige); line-height:.95;
       margin-bottom:28px;
     }
     .rule {
@@ -145,17 +144,20 @@
     .palette { display:flex; flex-direction:column; }
 
     .color-panel {
-      min-height:55vh;
-      display:flex; align-items:center; justify-content:space-between;
+      min-height:65vh;
+      display:flex; align-items:center; justify-content:flex-start;
       padding:60px 8vw;
       position:relative; overflow:hidden;
       cursor:default;
       transition:min-height .4s ease;
     }
-    .color-panel:hover { min-height:62vh; }
+    .color-panel:hover { min-height:72vh; }
 
-    /* left: name + descriptor */
-    .cp-left { display:flex; flex-direction:column; gap:10px; z-index:2; }
+    /* left: name + descriptor + hex */
+    .cp-left {
+      display:flex; flex-direction:column; gap:10px;
+      z-index:2; max-width:44%;
+    }
 
     .cp-name {
       font-family:'Cormorant Garamond',serif; font-weight:300;
@@ -166,15 +168,16 @@
       text-transform:uppercase; opacity:.55;
     }
 
-    /* right: big hex */
+    /* hex below subtitle */
     .cp-hex {
       font-family:'Cormorant Garamond',serif; font-weight:300;
-      font-size:clamp(3.5rem,9vw,8rem); letter-spacing:.06em;
-      opacity:.22; line-height:1; text-align:right; z-index:2;
+      font-size:clamp(1.6rem,3.2vw,3rem); letter-spacing:.12em;
+      opacity:.70; line-height:1; z-index:2;
+      margin-top:6px;
       transition:opacity .4s ease;
       user-select:all;
     }
-    .color-panel:hover .cp-hex { opacity:.38; }
+    .color-panel:hover .cp-hex { opacity:1; }
 
     /* thin divider line between panels */
     .color-panel + .color-panel {
@@ -190,10 +193,10 @@
 
     .cp-olive {
       background:linear-gradient(118deg,#1d321c 0%,#2a4529 100%);
-      color:var(--white);
+      color:var(--beige);
     }
     .cp-olive .cp-name { color:var(--beige); }
-    .cp-olive .cp-word { color:var(--white); }
+    .cp-olive .cp-word { color:var(--beige); opacity:.55; }
 
     .cp-beige {
       background:linear-gradient(118deg,#c3b09e 0%,#b09b86 100%);
@@ -201,12 +204,15 @@
     }
     .cp-beige .cp-word { color:var(--brown); }
 
-    .cp-white {
-      background:var(--white);
-      color:var(--brown);
-      border-top:1px solid rgba(32,14,3,.08) !important;
+    /* photo inside each panel */
+    .cp-img {
+      position:absolute; right:0; top:0;
+      height:115%; width:62%;
+      object-fit:cover; object-position:top center;
+      z-index:1;
+      -webkit-mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.85) 22%,black 40%);
+      mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.85) 22%,black 40%);
     }
-    .cp-white .cp-word { color:var(--brown); }
 
     /* watermark shape per panel */
     .color-panel::before {
@@ -241,7 +247,7 @@
     .final-title {
       font-family:'Cormorant Garamond',serif; font-weight:300;
       font-size:clamp(2rem,7vw,4.5rem); letter-spacing:.18em;
-      text-transform:uppercase; color:var(--white); margin-bottom:10px;
+      text-transform:uppercase; color:var(--beige); margin-bottom:10px;
     }
     .final-date {
       font-weight:200; font-size:.7rem; letter-spacing:.5em;
@@ -285,9 +291,40 @@
        RESPONSIVE
     ════════════════════════════════════════ */
     @media(max-width:640px){
-      .tree { width:150px; height:150px; }
-      .color-panel { padding:48px 6vw; flex-direction:column; align-items:flex-start; gap:16px; }
-      .cp-hex { font-size:clamp(2.8rem,14vw,5rem); align-self:flex-end; }
+      /* hero */
+      .tree-img { width:160px; }
+      .hero-title { font-size:clamp(2.6rem,11vw,4rem); }
+      .eyebrow { font-size:.52rem; }
+      .btn { padding:14px 32px; font-size:.6rem; }
+
+      /* panels */
+      .color-panel {
+        min-height:56vh;
+        padding:44px 6vw;
+        align-items:center;
+      }
+      .color-panel:hover { min-height:60vh; }
+
+      .cp-left { max-width:50%; gap:8px; }
+
+      .cp-name { font-size:clamp(1.5rem,6vw,2.2rem); }
+      .cp-word { font-size:.58rem; letter-spacing:.32em; }
+      .cp-hex  { font-size:clamp(1.2rem,5.5vw,2rem); letter-spacing:.1em; margin-top:4px; }
+
+      .cp-img {
+        width:58%;
+        height:100%;
+        -webkit-mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.9) 20%,black 38%);
+        mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.9) 20%,black 38%);
+      }
+
+      /* final cta */
+      .final-small-tree { width:80px; }
+      .final-title { font-size:clamp(1.8rem,8vw,3rem); }
+      .btn-lg { padding:15px 36px; font-size:.62rem; }
+
+      /* footer */
+      footer { padding:24px 20px; }
     }
   </style>
 </head>
@@ -330,32 +367,27 @@
       <div class="cp-left">
         <span class="cp-name">Marrom Profundo</span>
         <span class="cp-word">Acolhimento · Raiz · Profundidade</span>
+        <span class="cp-hex">#200e03</span>
       </div>
-      <span class="cp-hex">#200e03</span>
+      <img src="foto_brown.jpg" alt="" class="cp-img">
     </div>
 
     <div class="color-panel cp-olive reveal">
       <div class="cp-left">
         <span class="cp-name">Verde Oliva</span>
         <span class="cp-word">Renovação · Natureza · Crescimento</span>
+        <span class="cp-hex">#1d321c</span>
       </div>
-      <span class="cp-hex">#1d321c</span>
+      <img src="foto_olive.jpg" alt="" class="cp-img">
     </div>
 
     <div class="color-panel cp-beige reveal">
       <div class="cp-left">
         <span class="cp-name">Bege Sofisticado</span>
         <span class="cp-word">Elegância · Suavidade · Luz</span>
+        <span class="cp-hex">#c3b09e</span>
       </div>
-      <span class="cp-hex">#c3b09e</span>
-    </div>
-
-    <div class="color-panel cp-white reveal">
-      <div class="cp-left">
-        <span class="cp-name">Branco Puro</span>
-        <span class="cp-word">Clareza · Recomeço · Espaço</span>
-      </div>
-      <span class="cp-hex">#ffffff</span>
+      <img src="foto_beige.png" alt="" class="cp-img">
     </div>
 
   </div>
